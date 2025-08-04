@@ -1,7 +1,7 @@
 nasm -felf64 -g $1.asm -o $1.o
 ld -o $1 $1.o
 chmod u+x $1
-./hello
+./$1
 
-rm hello.o
-rm hello
+rm $1.o
+rm $1
