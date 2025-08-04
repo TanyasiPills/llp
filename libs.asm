@@ -61,14 +61,7 @@ numbers: db "0123456789"
 
 section .text
 
-global print_uint
-print_uint:
-    sub rsp, 32
-    mov rsi, rsp
-    add rsi, 31
-    mov byte[rsi], 0
-    dec rsi
-    
+int_root:
 .loop:
     mov rax, rdi     ;div result 
     xor rdx, rdx    ;mod result
@@ -90,7 +83,50 @@ print_uint:
 
 .end:
     inc rsi
+    ret
+
+global print_uint
+print_uint:
+    sub rsp, 32
+    mov rsi, rsp
+    add rsi, 31
+    mov byte[rsi], 0
+    dec rsi
+    
+    call int_root
+
     mov rdi, rsi 
-    call print_string
+    call print_string 
+
     add rsp, 32
     ret
+
+global print_int
+print_int:
+    sub rsp, 32
+    mov rsi, rsp
+    add rsi, 31
+    mov byte[rsi], 0
+    dec rsi
+
+    mov r8, rdi
+    neg rdi
+
+    call int_root
+
+    cmp r8, 0
+    jge .end
+    dec rsi
+    mov byte[rsi], '-'
+    
+.end:
+    mov rdi, rsi
+    call print_string
+
+    add rsp, 32
+    ret
+
+
+
+
+

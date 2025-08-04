@@ -5,9 +5,10 @@ extern print_char
 extern print_string
 extern exit
 extern print_uint
+extern print_int
 
 section .data
-message: db "Suck my balls, hihi >:3", 10, 0
+message: db "String works, hihi >:3", 10, 0
 
 section .text
 global _start
@@ -19,6 +20,9 @@ _start:
     call print_string
     mov rdi, 0xF
     call print_uint
+    call print_newline
+    mov rdi, -2
+    call print_int
 
     xor rdi, rdi
     call exit
