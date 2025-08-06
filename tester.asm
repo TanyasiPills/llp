@@ -6,6 +6,7 @@ extern print_string
 extern exit
 extern print_uint
 extern print_int
+extern read_char
 
 section .data
 message: db "String works, hihi >:3", 10, 0
@@ -23,6 +24,10 @@ _start:
     call print_newline
     mov rdi, -2
     call print_int
+    call read_char
+    mov rdi, rax
+    call print_char
+    call print_newline
 
     xor rdi, rdi
     call exit

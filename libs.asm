@@ -126,6 +126,22 @@ print_int:
     add rsp, 32
     ret
 
+section .bss
+
+char_buffer: resb 1 
+
+section .text
+
+global read_char
+read_char:
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, char_buffer
+    mov rdx, 1
+    syscall
+
+    mov rax, char_buffer
+    ret
 
 
 
