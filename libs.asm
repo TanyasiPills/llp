@@ -140,7 +140,7 @@ read_char:
     mov rdx, 1
     syscall
 
-    mov rax, char_buffer
+    movzx rax, byte[char_buffer]
     ret
 
 
