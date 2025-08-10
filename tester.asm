@@ -7,15 +7,21 @@ extern exit
 extern print_uint
 extern print_int
 extern read_char
+extern read_word
 
 section .data
 message: db "String works, hihi >:3", 10, 0
+
+section .bss
+output_buffer: resb 12
 
 section .text
 global _start
 _start:
     lea rdi, [message]
     call print_string
+    mov rdi, output_buffer
+    mov rsi, 12
     call read_char
     mov rdi, rax
     call print_char

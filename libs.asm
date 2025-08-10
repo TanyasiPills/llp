@@ -129,6 +129,7 @@ print_int:
 section .bss
 
 char_buffer: resb 1 
+word_buffer: resb 256
 
 section .text
 
@@ -140,9 +141,30 @@ read_char:
     mov rdx, 1
     syscall
 
+    cmp byte[char_buffer], 0x0A
+    jz .enter
+
     movzx rax, byte[char_buffer]
+.enter:
     ret
 
+global read_word
+read_word:
+    xor rbx, rbx 
+.readin:
+    
 
+    cmp rax, 0x20
+    jz .readin
 
+    cmp rbx, rsi
+    jz .end
 
+    mov [rdi+rbx], rax
+    inc rbx
+
+    jmp .readin
+
+.end:
+    mov byte[rdi+rbx], 0
+    ret 
