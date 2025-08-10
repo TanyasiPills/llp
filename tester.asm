@@ -22,7 +22,7 @@ _start:
     call print_string
     mov rdi, output_buffer
     mov rsi, 12
-    call read_char
+    call read_word
     mov rdi, rax
     call print_char
     call print_newline

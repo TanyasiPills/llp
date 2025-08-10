@@ -152,19 +152,32 @@ global read_word
 read_word:
     xor rbx, rbx 
 .readin:
-    
+    mov rcx, rdi
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, word_buffer
+    mov rdx, 256
+    syscall
 
-    cmp rax, 0x20
-    jz .readin
+    pop rdi
 
-    cmp rbx, rsi
-    jz .end
-
-    mov [rdi+rbx], rax
+.loop:
+    mov r8, [word_buffer+rbx]
     inc rbx
 
-    jmp .readin
+    cmp r8, 0x0A
+    jz .loop
+
+    mov [rcx+rbx-1], r8
+    
+    inc rbx 
+    cmp rbx, rsi
+    dec rbx
+    ja .end
+
+    jmp .loop
 
 .end:
     mov byte[rdi+rbx], 0
+    mov rax, rcx
     ret 
