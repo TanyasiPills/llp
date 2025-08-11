@@ -24,7 +24,6 @@ _start:
     call read_word
     mov rdi, output_buffer
     call print_string
-    call print_newline
 
     xor rdi, rdi
     call exit
