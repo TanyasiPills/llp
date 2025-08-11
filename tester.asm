@@ -18,13 +18,13 @@ output_buffer: resb 12
 section .text
 global _start
 _start:
-    lea rdi, [message]
-    call print_string
-    mov rdi, output_buffer
+    mov rbx, 0
+    mov byte[output_buffer+rbx], 12
+    lea rdi, output_buffer
     mov rsi, 12
     call read_word
-    mov rdi, rax
-    call print_char
+    lea rdi, output_buffer
+    call print_string
     call print_newline
 
     xor rdi, rdi
