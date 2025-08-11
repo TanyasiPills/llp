@@ -13,17 +13,16 @@ section .data
 message: db "String works, hihi >:3", 10, 0
 
 section .bss
+global output_buffer
 output_buffer: resb 12
 
 section .text
 global _start
 _start:
-    mov rbx, 0
-    mov byte[output_buffer+rbx], 12
-    lea rdi, output_buffer
+    mov rdi, output_buffer
     mov rsi, 12
     call read_word
-    lea rdi, output_buffer
+    mov rdi, output_buffer
     call print_string
     call print_newline
 
