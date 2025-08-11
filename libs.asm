@@ -151,7 +151,7 @@ read_char:
 global read_word
 read_word:
     xor rbx, rbx 
-    mov rcx, rdi
+    mov r9, rdi
     dec rsi
     mov r8, rsi
     mov rax, 0
@@ -166,7 +166,7 @@ read_word:
     cmp al, 0x0A
     je .end
 
-    mov byte[rcx+rbx], 10
+    mov byte[r9+rbx], 10
     
     inc rbx 
     cmp rbx, r8
@@ -175,5 +175,5 @@ read_word:
     jmp .loop
 
 .end:
-    mov byte[rcx+rbx], 0
+    mov byte[r9+rbx], 0
     ret 
