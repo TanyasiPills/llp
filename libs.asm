@@ -255,3 +255,31 @@ parse_int:
 
 .endEnd:
     ret
+
+global string_equals
+string_equals:
+    mov rax, 1
+    xor r8, r8
+    xor r9, r9 ;if 1 needs to check ending
+.loop:
+    cmp byte[rdi+r8], 0
+    jne .loop_c
+    cmp byte[rsi+r8], 0
+    jne .loop_c
+
+    mov r9, 1
+
+.loop_c:
+    mov cl, byte[rdi+r8]
+    cmp cl, byte[rsi+r8]
+    jne .bad
+
+    cmp r9, 0
+    jne .loop
+    jmp .end
+
+.bad:
+    mov rax, 0
+
+.end:
+    ret
