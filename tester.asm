@@ -23,7 +23,7 @@ _start:
     mov rsi, 12
     call read_word
     mov rdi, output_buffer
-    call print_string
+    call print_string 
 
     xor rdi, rdi
     call exit

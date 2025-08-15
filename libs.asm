@@ -166,7 +166,7 @@ read_word:
     cmp al, 0x0A
     je .end
 
-    mov byte[r9+rbx], 10
+    mov byte[r9+rbx], al
     
     inc rbx 
     cmp rbx, r8
