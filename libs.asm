@@ -177,3 +177,30 @@ read_word:
 .end:
     mov byte[r9+rbx], 0
     ret 
+
+global parse_uint
+parse_uint:
+    xor rax, rax
+    xor rdx, rdx
+    mov rbx, 10
+
+.loop:
+    movzx rcx, byte[rdi]
+    cmp rcx, 0
+    jz .end
+
+    cmp rcx, '0'
+    jl .end
+
+    cmp rcx, '9'
+    ja .end
+
+    sub rcx, '0'
+    mul rbx
+    add rax, rcx
+
+    inc rdi
+    jmp .loop
+
+.end:
+    ret 
