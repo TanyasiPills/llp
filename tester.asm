@@ -9,6 +9,7 @@ extern print_int
 extern read_char
 extern read_word
 extern parse_uint
+extern parse_int
 
 section .data
 message: db "String works, hihi >:3", 10, 0
@@ -25,10 +26,10 @@ _start:
     call read_word
     
     mov rdi, output_buffer
-    call parse_uint
+    call parse_int
 
     mov rdi, rax
-    call print_uint
+    call print_int
 
     xor rdi, rdi
     call exit

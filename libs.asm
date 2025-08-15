@@ -110,8 +110,11 @@ print_int:
     dec rsi
 
     mov r8, rdi
+    cmp rdi, 0
+    jge .process
     neg rdi
 
+.process:
     call int_root
 
     cmp r8, 0
@@ -181,16 +184,15 @@ read_word:
 global parse_uint
 parse_uint:
     xor rax, rax
-    xor rdx, rdx
     mov rbx, 10
 
 .loop:
     movzx rcx, byte[rdi]
     cmp rcx, 0
-    jz .end
+    je .end
 
     cmp rcx, '0'
-    jl .end
+    jb .end
 
     cmp rcx, '9'
     ja .end
@@ -204,3 +206,52 @@ parse_uint:
 
 .end:
     ret 
+
+global parse_int
+parse_int:
+    xor rax, rax
+    xor r8, r8 ;is negative
+    mov rbx, 10
+    xor rsi, rsi
+.loop:
+    movzx rcx, byte[rdi]
+    cmp rcx, 0
+    je .end
+    
+    cmp rcx, '-'
+    je .negative
+    
+    cmp rcx, '0'
+    jl .end
+
+    cmp rcx, '9'
+    jg .end
+
+    sub rcx, '0'
+    imul rbx
+    add rax, rcx
+
+    inc rdi
+    inc rsi
+    jmp .loop
+
+.negative:
+    cmp rsi, 0
+    jne .bad
+    
+    mov r8, 1
+    inc rdi
+    inc rsi
+    jmp .loop
+
+.bad:
+    mov rax, 0
+
+.end:
+    cmp r8, 0
+    je .endEnd
+
+    neg rax
+
+.endEnd:
+    ret
