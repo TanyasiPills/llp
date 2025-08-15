@@ -283,3 +283,28 @@ string_equals:
 
 .end:
     ret
+
+global string_copy
+string_copy:
+    call string_length
+    inc rax
+    cmp rax, rdx
+    jae .bad
+
+    xor rcx, rcx
+    mov rax, rsi
+.loop:
+    mov r8b, byte[rdi+rcx]
+    mov byte[rsi+rcx], r8b
+    
+    cmp byte[rsi+rcx], 0
+    je .end
+
+    inc rcx
+    jmp .loop
+
+.bad:
+    mov rax, 0
+
+.end:
+    ret

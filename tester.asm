@@ -11,24 +11,25 @@ extern read_word
 extern parse_uint
 extern parse_int
 extern string_equals
+extern string_copy
 
 section .data
 message: db "String works, hihi >:3", 10, 0
-message2: db "String works, hihi >:3", 10, 0
 
 section .bss
 global output_buffer
-output_buffer: resb 12
+output_buffer: resb 256
 
 section .text
 global _start
 _start:
     mov rdi, message
-    mov rsi, message2
-    call string_equals  
+    mov rsi, output_buffer
+    mov rdx, 256
+    call string_copy
     
-    mov rdi, rax
-    call print_uint
+    mov rdi, output_buffer
+    call print_string
 
     xor rdi, rdi
     call exit
